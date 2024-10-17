@@ -436,3 +436,32 @@ body {
 .mobileSearchResult .mobileSearchItem .profileImage img {
   @apply w-[2.5rem] h-[2.5rem] object-cover;
 }
+
+.adWidget {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.adWidget h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.ad {
+  text-align: center;
+}
+
+.ad img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.ad p {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #888;
+}

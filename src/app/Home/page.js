@@ -42,12 +42,13 @@ const Page = () => {
               <img src="/assets/image/avatar_default.jpg" alt="" />
               <input
                 type="text"
-                placeholder="What's on your mind, Jhon Doe?"
+                placeholder="What's on your mind, John Doe?"
                 id="createNewPost"
                 onFocus={() => setIsFocused(true)}
               />
               <button className="inBtn">Post</button>
             </div>
+            
             <div className="otherOptions">
               <div className="option">
                 <BsFillCameraVideoFill />
@@ -67,6 +68,17 @@ const Page = () => {
             return <Post key={index} userData={user} />
           })}
         </div>
+
+        <div className="adWidget">
+            <h3>Sponsored</h3>
+            <div className="ad">
+              <img
+                src="https://via.placeholder.com/300x250"
+                alt="Ad Placeholder"
+              />
+              <p>Advertisement</p>
+            </div>
+          </div>
 
         <div className="rightSection">
           <div className="requestWidget">

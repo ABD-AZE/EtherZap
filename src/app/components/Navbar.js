@@ -8,6 +8,9 @@ import { RiQuestionFill } from "react-icons/ri";
 import userData from "@/app/UserData";
 import { motion } from "framer-motion";
 import { useClickOutside } from "@mantine/hooks";
+import { Switch } from "@headlessui/react";
+import Swal from "sweetalert2";
+
 
 const Navbar = () => {
   const [isFocused, setIsFocused] = useState(false);
@@ -16,6 +19,33 @@ const Navbar = () => {
   const [ProfileMenu, setProfileMenu] = useState(false);
   const [searchedUser, setSearchedUser] = useState(userData);
   const [searchPanel, setSearchPanel] = useState(false);
+  const [adsEnabled, setAdsEnabled] = useState(true); 
+
+  const handleToggle = () => {
+    if (!adsEnabled) {
+      setAdsEnabled(true);
+    } else {
+      Swal.fire({
+        title: 'Disable Ads?',
+        text: "By disabling ads, you'll need to pay for gas fees. Do you want to proceed?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, proceed with transaction',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Transaction Initiated',
+            'You will be redirected to complete the transaction.',
+            'success'
+          );
+          setAdsEnabled(false); 
+        }
+      });
+    }
+  };
 
   const searchUsers = (value) => {
     let searchedUser = userData.filter((user) => {
@@ -38,7 +68,7 @@ const Navbar = () => {
     <>
       <div className="inNavbar">
         <Link href={"/"} className="inLogo">
-          InSocial
+          SocialApp
         </Link>
         <div
           ref={ref}
@@ -115,8 +145,24 @@ const Navbar = () => {
             <MdSearch />
           </div>
           <label className="inBtn" htmlFor="createNewPost">
-            Create
+            Post
           </label>
+
+          {/* Toggle Button for Ads */}
+          <div className="adsToggle">
+            <span>Ads:</span>
+            <Switch
+              checked={adsEnabled}
+              onChange={handleToggle}
+              className={`${adsEnabled ? "bg-green-500" : "bg-gray-400"} relative inline-flex items-center h-6 rounded-full w-11`}
+            >
+              <span className="sr-only">Enable Ads</span>
+              <span
+                className={`${adsEnabled ? "translate-x-6" : "translate-x-1"} inline-block w-4 h-4 transform bg-white rounded-full`}
+              />
+            </Switch>
+          </div>
+
           <div className="userProfile">
             <div
               className="userImage"
@@ -210,40 +256,44 @@ const Navbar = () => {
               className="inIcon cursor-pointer"
               onClick={() => {
                 setSearchValue("");
-                setSearchedUser(userData);
+                setTimeout(() => {
+                  setSearchedUser(userData);
+                }, 300);
               }}
             />
           )}
         </div>
 
-        <div className="mobileSearchResult">
-          {searchedUser.map((user, index) => {
-            if (user.error) {
-              return (
-                <div className="noUserFound" key={index}>
-                  <FaFaceFrown />
-                  <h3>Sorry {user.error}</h3>
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  className="mobileSearchItem"
-                  key={index}
-                  onClick={() => {
-                    setSearchValue(user.name);
-                    setSearchPanel(false);
-                  }}
-                >
-                  <div className="profileImage">
-                    <img src={`${user.profilePic}`} alt="" />
+        <motion.div
+          className="searchResult"
+          initial={{ y: 30, opacity: 0, pointerEvents: "none" }}
+          animate={{
+            y: searchValue.length >= 1 ? 0 : 30,
+            opacity: searchValue.length >= 1 ? 1 : 0,
+            pointerEvents: searchValue.length >= 1 ? "auto" : "none",
+          }}
+        >
+          {searchedUser.length > 0 &&
+            searchedUser.map((user, index) => {
+              if (user.error) {
+                return (
+                  <div className="noUserFound" key={index}>
+                    <FaFaceFrown />
+                    <h3>Sorry {user.error}</h3>
                   </div>
-                  <h3>{user.name}</h3>
-                </div>
-              );
-            }
-          })}
-        </div>
+                );
+              } else {
+                return (
+                  <div key={index} className="searchResultItem">
+                    <div className="userImage">
+                      <img src={`${user.profilePic}`} alt="" />
+                    </div>
+                    <h3>{user.name}</h3>
+                  </div>
+                );
+              }
+            })}
+        </motion.div>
       </motion.div>
     </>
   );
