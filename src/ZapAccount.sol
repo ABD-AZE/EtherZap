@@ -21,13 +21,13 @@ contract ZapAccount is IAccountExecute, IAccount{
     function entryPoint() public view virtual returns (IEntryPoint) {
         return _entryPoint;
     }
-    function execute(address dest, uint256 value, bytes calldata func) external onlyOwnerorEntryPoint {
-        _call(dest, value, func);
-    }
-    function _call(address dest, uint256 value, bytes calldata func) internal {
-        (bool success, bytes memory data) = dest.call{value: value}(func);
-        require(success, string(data));
-    }
+    // function execute(address dest, uint256 value, bytes calldata func) external onlyOwnerorEntryPoint {
+    //     _call(dest, value, func);
+    // }
+    // function _call(address dest, uint256 value, bytes calldata func) internal {
+    //     (bool success, bytes memory data) = dest.call{value: value}(func);
+    //     require(success, string(data));
+    // }
     function validateUserOp(
         PackedUserOperation calldata userOp,
         bytes32 userOpHash,
@@ -48,7 +48,7 @@ contract ZapAccount is IAccountExecute, IAccount{
         _executeUserOp(userOp, userOpHash);
     }
     function _executeUserOp(PackedUserOperation calldata userOp, bytes32 userOpHash) internal {
-        (bool success, bytes memory data) = address(this).call(userOp.callData);
+        (bool success, bytes memory data) = address(this){gas: userOp.gasFees}.call(userOp.callData);
         require(success, string(data));
     }
 }
