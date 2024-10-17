@@ -8,7 +8,7 @@ import "lib/account-abstraction/contracts/interfaces/IAccountExecute.sol";
 import "lib/account-abstraction/contracts/interfaces/IAccount.sol";
 import "lib/account-abstraction/contracts/core/Helpers.sol";
 
-contract ZapAccount is IAccountExecute, IAccount{
+contract ZapAccount is IAccount{
     address public immutable owner;
     IEntryPoint private immutable _entryPoint;
     modifier onlyOwnerorEntryPoint() {
@@ -43,12 +43,5 @@ contract ZapAccount is IAccountExecute, IAccount{
         if (owner != ECDSA.recover(hash, userOp.signature))
             return SIG_VALIDATION_FAILED;
         return SIG_VALIDATION_SUCCESS;
-    }
-    function executeUserOp(PackedUserOperation calldata userOp, bytes32 userOpHash) external onlyOwnerorEntryPoint {
-        _executeUserOp(userOp, userOpHash);
-    }
-    function _executeUserOp(PackedUserOperation calldata userOp, bytes32 userOpHash) internal {
-        (bool success, bytes memory data) = address(this).call(userOp.callData);
-        require(success, string(data));
     }
 }
