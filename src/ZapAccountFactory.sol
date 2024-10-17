@@ -2,8 +2,10 @@
 pragma solidity ^0.8.23;
 
 import "./ZapAccount.sol";
-contract ZapAccountFactory{
+
+contract ZapAccountFactory {
     IEntryPoint private immutable _entryPoint;
+
     constructor(IEntryPoint anEntryPoint) {
         _entryPoint = anEntryPoint;
     }
@@ -20,18 +22,8 @@ contract ZapAccountFactory{
 
     function getAddress(address owner, uint256 salt) public view returns (address) {
         bytes32 byteSalt = bytes32(salt);
-        bytes memory bytecode = abi.encodePacked(
-            type(ZapAccount).creationCode,
-            abi.encode(owner)
-        );
-        bytes32 hash = keccak256(
-            abi.encodePacked(
-                bytes1(0xff),
-                address(this),
-                byteSalt,
-                keccak256(bytecode)
-            )
-        );
+        bytes memory bytecode = abi.encodePacked(type(ZapAccount).creationCode, abi.encode(owner));
+        bytes32 hash = keccak256(abi.encodePacked(bytes1(0xff), address(this), byteSalt, keccak256(bytecode)));
         return address(uint160(uint256(hash)));
     }
 }
