@@ -11,15 +11,15 @@ import "../lib/account-abstraction/contracts/core/Helpers.sol";
 
 contract ZapAccount is IAccount {
     address public immutable owner;
-    IEntryPoint private immutable _entryPoint;
+    IEntryPoint private immutable _entryPoint=IEntryPoint(0xEdf47C7E665bEb76b216205573935236f89ae83A);
 
     modifier onlyOwnerorEntryPoint() {
         require(msg.sender == owner || msg.sender == address(_entryPoint), "only owner or entry point");
         _;
     }
 
-    constructor(IEntryPoint anEntryPoint) {
-        _entryPoint = anEntryPoint;
+    constructor(address _owner) {
+        owner=_owner;
     }
 
     function entryPoint() public view virtual returns (IEntryPoint) {
