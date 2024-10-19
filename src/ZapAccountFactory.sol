@@ -5,7 +5,7 @@ import "./ZapAccount.sol";
 
 contract ZapAccountFactory {
     IEntryPoint private immutable _entryPoint;
-
+    address private immutable BASE_ENTRY_POINT_CONTRACT = 0x0000000071727De22E5E9d8BAf0edAc6f37da032;
     constructor(IEntryPoint anEntryPoint) {
         _entryPoint = anEntryPoint;
     }
@@ -16,7 +16,7 @@ contract ZapAccountFactory {
         if (codeSize > 0) {
             return payable(addr);
         }
-       ZapAccount ret = new ZapAccount{salt: bytes32(salt)}(owner);
+        ZapAccount ret = new ZapAccount{salt: bytes32(salt)}(owner);
         return address(ret);
     }
 
