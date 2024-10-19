@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import "forge-std/Script.sol";
+import {Script} from "../lib/forge-std/src/Script.sol";
 import "../lib/account-abstraction/contracts/core/EntryPoint.sol";
 import "../src/ZapAccountFactory.sol";
 contract MyZapAccountFactory is Script{ 
