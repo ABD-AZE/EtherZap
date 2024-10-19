@@ -20,9 +20,9 @@ contract Deploy is Script {
     // base sepolia
     address public AF = 0xe7849B3D7B2611B7FffED973645D9023567EFDBE;
     address public EP = 0x0000000071727De22E5E9d8BAf0edAc6f37da032;
-    uint256 private salt = 12345678;
+    uint256 private salt = 12098236182395721243;
     //base sepolia
-    address myaddress = 0x509d5DC4d295a7F534eC58F0f75Fd723ab72F8D4;
+    address myaddress = 0x9f13c3FA4eAE22A984c1f9c4936477C448540A22;
     //anvil
     // address myaddress  = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
     // struct PackedUserOperation {
@@ -46,14 +46,15 @@ contract Deploy is Script {
         uint128 maxFeePerGas = maxPriorityFeePerGas;
         address sender = getAddress(myaddress, salt); //vm.computeCreateAddress(AF, 1);
         console.log(sender);
-        bytes memory Calldata =  abi.encodeWithSignature("execute(address,uint256,bytes)",address(0x9f13c3FA4eAE22A984c1f9c4936477C448540A22) ,0.1 ether,hex"");
+        console.log(salt);
+        // bytes memory Calldata =  abi.encodeWithSignature("execute(address,uint256,bytes)",address(0x9f13c3FA4eAE22A984c1f9c4936477C448540A22) ,0.1 ether,hex"");
         // bytes memory Calldata = generateCallData(address(0x9f13c3FA4eAE22A984c1f9c4936477C448540A22), 0.1 ether, hex"");
         bytes memory ic = generateInitCode(AF, myaddress, salt);
         PackedUserOperation memory userOp= PackedUserOperation({
             sender: sender,
             nonce: ep.getNonce(sender,0),
-            initCode: hex"",
-            callData: Calldata,
+            initCode: ic,
+            callData: hex"",
             accountGasLimits: bytes32(uint256(verificationGasLimit) << 128 | callGasLimit),
             preVerificationGas: uint256(verificationGasLimit),
             gasFees: bytes32(uint256(maxPriorityFeePerGas) << 128 | maxFeePerGas),
@@ -65,7 +66,7 @@ contract Deploy is Script {
         uint8 v;
         bytes32 r;
         bytes32 s;
-        uint256 BASE_SEPOLIA_DEFAULT_KEY = 0x9442ed40cedff46250c0d84d2f0ae177c08ffb4dfe8cf78a1f5b6e999aa18d44;
+        uint256 BASE_SEPOLIA_DEFAULT_KEY = 0x1a8bb08a647acabdcdeea7f95123acf6ad5be964b0875784bc756609621b2973;
         uint256 ANVIL_DEFAULT_KEY = 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80;
         // (v, r, s) = vm.sign(BASE_SEPOLIA_DEFAULT_KEY, digest);
         (v,r,s)  = vm.sign(BASE_SEPOLIA_DEFAULT_KEY, digest);
@@ -74,7 +75,7 @@ contract Deploy is Script {
         PackedUserOperation[] memory ops = new PackedUserOperation[](1);
         ops[0] = userOp;
         uint256 gasLimit = 10_000_000_000; // Adjust this value as needed
-        vm.startBroadcast(BASE_SEPOLIA_DEFAULT_KEY);
+        vm.startBroadcast();
         // (bool success, ) = address(sender).call{value: 0.05 ether}("");
         // require(success, "Transfer failed");
         ep.depositTo{value: 0.05 ether}(sender);
