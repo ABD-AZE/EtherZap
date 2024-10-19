@@ -7,7 +7,7 @@ import "../src/ZapAccountFactory.sol";
 contract MyZapAccountFactory is Script{ 
     IEntryPoint private i_entrypoint;
     function run() external {
-        i_entrypoint = IEntryPoint(address(0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789));
+        i_entrypoint = IEntryPoint(address(0x0000000071727De22E5E9d8BAf0edAc6f37da032));
         vm.startBroadcast();
         ZapAccountFactory factory = new ZapAccountFactory(i_entrypoint);
         vm.stopBroadcast();
