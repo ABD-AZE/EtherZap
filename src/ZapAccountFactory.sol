@@ -16,7 +16,7 @@ contract ZapAccountFactory {
         if (codeSize > 0) {
             return ZapAccount(payable(addr));
         }
-        ret = new ZapAccount{salt: bytes32(salt)}(IEntryPoint(owner));
+        ret = new ZapAccount(IEntryPoint(owner));
         return ret;
     }
 

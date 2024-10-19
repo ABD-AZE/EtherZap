@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
-import "node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "node_modules/@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
-import "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
-import "lib/account-abstraction/contracts/interfaces/IAccountExecute.sol";
-import "lib/account-abstraction/contracts/interfaces/IAccount.sol";
-import "lib/account-abstraction/contracts/core/Helpers.sol";
+import "../lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol";
+import "../lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
+import "../lib/account-abstraction/contracts/interfaces/IAccountExecute.sol";
+import "../lib/account-abstraction/contracts/interfaces/IAccount.sol";
+import "../lib/account-abstraction/contracts/core/Helpers.sol";
 
 contract ZapAccount is IAccount {
     address public immutable owner;
