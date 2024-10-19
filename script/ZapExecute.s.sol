@@ -20,7 +20,7 @@ contract Deploy is Script {
     // base sepolia
     address public AF = 0xe7849B3D7B2611B7FffED973645D9023567EFDBE;
     address public EP = 0x0000000071727De22E5E9d8BAf0edAc6f37da032;
-    uint256 private salt = 5;
+    uint256 private salt = 12345678;
     //base sepolia
     address myaddress = 0x509d5DC4d295a7F534eC58F0f75Fd723ab72F8D4;
     //anvil
@@ -52,7 +52,7 @@ contract Deploy is Script {
         PackedUserOperation memory userOp= PackedUserOperation({
             sender: sender,
             nonce: ep.getNonce(sender,0),
-            initCode: ic,
+            initCode: hex"",
             callData: Calldata,
             accountGasLimits: bytes32(uint256(verificationGasLimit) << 128 | callGasLimit),
             preVerificationGas: uint256(verificationGasLimit),
@@ -77,7 +77,7 @@ contract Deploy is Script {
         vm.startBroadcast(BASE_SEPOLIA_DEFAULT_KEY);
         // (bool success, ) = address(sender).call{value: 0.05 ether}("");
         // require(success, "Transfer failed");
-        // ep.depositTo{value: 0.05 ether}(sender);
+        ep.depositTo{value: 0.05 ether}(sender);
         ep.handleOps{gas: gasLimit}(
             ops,
             payable(myaddress)
