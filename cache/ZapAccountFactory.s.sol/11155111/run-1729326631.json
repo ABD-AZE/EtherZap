@@ -1,0 +1,7 @@
+{
+  "transactions": [
+    {
+      "rpc": "https://eth-sepolia-public.unifra.io"
+    }
+  ]
+}

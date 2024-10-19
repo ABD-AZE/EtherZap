@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import "lib/account-abstraction/contracts/interfaces/IPaymaster.sol";
-import "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
-import "node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "node_modules/@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
-import "lib/account-abstraction/contracts/core/Helpers.sol";
+import "../lib/account-abstraction/contracts/interfaces/IPaymaster.sol";
+import "../lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol";
+import "../lib/account-abstraction/contracts/core/Helpers.sol";
 contract ZapPayMaster  {
     uint256 public constant PAYMASTER_DATA_OFFSET = 52;
     uint256 private constant VALID_TIMESTAMP_OFFSET = PAYMASTER_DATA_OFFSET;

@@ -11,13 +11,15 @@ import {StdUtils} from "../lib/forge-std/src/StdUtils.sol";
 import {EntryPoint,PackedUserOperation} from "../lib/account-abstraction/contracts/core/EntryPoint.sol";
 import {DevOpsTools} from "../lib/foundry-devops/src/DevOpsTools.sol";
 import {MessageHashUtils} from "../lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol";
+import "../src/ZapAccount.sol";
 
 contract Deploy is Script {
     // address AF = 0x8464135c8F25Da09e49BC8782676a84730C318bC;
      //address EP = 0x71C95911E9a5D330f4D621842EC243EE1343292e;
-    address AF = 0xD76EF76C40F2888d0D22F6d6551500c063Fd4153;
+    address AF = 0x3D0919fD0f22cF53302c3bBD4567fC661c8BF6a1;
    address EP=   0xEdf47C7E665bEb76b216205573935236f89ae83A;
     //address EP= 0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789;
+    uint256 salt = 5;
 
     // struct PackedUserOperation {
     //     address sender;
@@ -39,14 +41,14 @@ contract Deploy is Script {
         uint128 callGasLimit = verificationGasLimit;
         uint128 maxPriorityFeePerGas = 256;
         uint128 maxFeePerGas = maxPriorityFeePerGas;
-        address sender = vm.computeCreateAddress(AF, 1);
-        bytes memory ic = hex"D76EF76C40F2888d0D22F6d6551500c063Fd41539859387b000000000000000000000000372610bdcfa0531b40c8b27bb22a4e198ef04604";
+        address sender = getAddress(0x372610Bdcfa0531B40C8b27bb22A4e198eF04604, salt);//vm.computeCreateAddress(AF, 1);
+        bytes memory ic = hex"3D0919fD0f22cF53302c3bBD4567fC661c8BF6a15fbfb9cf000000000000000000000000372610bdcfa0531b40c8b27bb22a4e198ef046040000000000000000000000000000000000000000000000000000000000000005";
 
         PackedUserOperation memory userOp=PackedUserOperation({
             sender: sender,
             nonce: ep.getNonce(sender,0),
             initCode: ic,
-            callData: hex"61461954",
+            callData: hex"",
             accountGasLimits: bytes32(uint256(verificationGasLimit) << 128 | callGasLimit), // Increased gas limit
             preVerificationGas: verificationGasLimit, // Increased pre-verification gas
             gasFees: bytes32(uint256(maxPriorityFeePerGas) << 128 | maxFeePerGas), // Increased gas price
@@ -75,5 +77,12 @@ contract Deploy is Script {
            
 
         vm.stopBroadcast();
+    }
+
+    function getAddress(address owner, uint256 salt) public view returns (address) {
+        bytes32 byteSalt = bytes32(salt);
+        bytes memory bytecode = abi.encodePacked(type(ZapAccount).creationCode, abi.encode(owner));
+        bytes32 hash = keccak256(abi.encodePacked(bytes1(0xff), address(this), byteSalt, keccak256(bytecode)));
+        return address(uint160(uint256(hash)));
     }
 }

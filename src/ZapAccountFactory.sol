@@ -10,14 +10,14 @@ contract ZapAccountFactory {
         _entryPoint = anEntryPoint;
     }
 
-    function createAccount(address owner, uint256 salt) public returns (ZapAccount ret) {
+    function createAccount(address owner, uint256 salt) public returns (address ) {
         address addr = getAddress(owner, salt);
         uint256 codeSize = addr.code.length;
         if (codeSize > 0) {
-            return ZapAccount(payable(addr));
+            return payable(addr);
         }
-        ret = new ZapAccount{salt: bytes32(salt)}(owner);
-        return ret;
+       ZapAccount ret = new ZapAccount{salt: bytes32(salt)}(owner);
+        return address(ret);
     }
 
     function getAddress(address owner, uint256 salt) public view returns (address) {
