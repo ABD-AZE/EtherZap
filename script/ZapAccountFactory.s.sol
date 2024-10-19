@@ -5,13 +5,10 @@ import {Script} from "../lib/forge-std/src/Script.sol";
 import "../lib/account-abstraction/contracts/core/EntryPoint.sol";
 import "../src/ZapAccountFactory.sol";
 contract MyZapAccountFactory is Script{ 
-    EntryPoint private immutable i_entrypoint;
-    constructor(EntryPoint entrypoint) {
-        i_entrypoint=entrypoint;
-    }
+    IEntryPoint private immutable _entryPoint= IEntryPoint(0xEdf47C7E665bEb76b216205573935236f89ae83A);
     function run() external {
         vm.startBroadcast();
-        ZapAccountFactory factory = new ZapAccountFactory(i_entrypoint);
+        ZapAccountFactory factory = new ZapAccountFactory(_entryPoint);
         vm.stopBroadcast();
     }
 }
