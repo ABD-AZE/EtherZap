@@ -6,11 +6,21 @@ import { Ad } from "@/types/form";
 import AdSubmissionForm from "../FormElements/AdSubmissionForm";
 import AdsTable from "../FormElements/AdsTable";
 import AdStatusTable from "../FormElements/AdsStatusTable";
+
 const ECommerce: React.FC = () => {
   const [ads, setAds] = useState<Ad[]>([]);
+  const [videoAdsCount, setVideoAdsCount] = useState<number>(50); // Initial count for Video Ads
+  const [bannerAdsCount, setBannerAdsCount] = useState<number>(40); // Initial count for Banner Ads
 
   const handleAdSubmit = (ad: Ad) => {
     setAds((prevAds) => [...prevAds, ad]);
+
+    // Increment the corresponding ad count based on ad type
+    if (ad.adType === 'Video') {
+      setVideoAdsCount((prevCount) => prevCount + 1);
+    } else {
+      setBannerAdsCount((prevCount) => prevCount + 1);
+    }
   };
 
   return (
@@ -27,11 +37,11 @@ const ECommerce: React.FC = () => {
         </div>
       </div>
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-9 2xl:gap-7.5">
-        <ChartOne />
+        <ChartOne videoAdsCount={videoAdsCount} bannerAdsCount={bannerAdsCount} />
         <ChartTwo />
         <div className="col-span-12 xl:col-span-8">
-        <AdsTable ads={ads} />
-        <AdStatusTable ads={ads} />
+          <AdsTable ads={ads} />
+          <AdStatusTable ads={ads} />
         </div>
       </div>
     </>
