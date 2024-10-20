@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// // SPDX-License-Identifier: MIT
+// pragma solidity ^0.8.20;
 
 import {Nonces} from "../lib/openzeppelin-contracts/contracts/utils/Nonces.sol";
 import {ECDSA} from "../lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
@@ -24,12 +24,12 @@ contract UserManager is Nonces, VRFConsumerBaseV2 {
     address public immutable i_ServerManager;
     VRFCoordinatorV2Interface COORDINATOR;
 
-    uint64 s_subscriptionId;
-    address vrfCoordinator;
-    bytes32 keyHash;
-    uint32 callbackGasLimit = 100000;
-    uint16 requestConfirmations = 3;
-    uint32 numWords = 1;
+//     uint64 s_subscriptionId;
+//     // address vrfCoordinator;
+//     bytes32 keyHash;
+//     uint32 callbackGasLimit = 100000;
+//     uint16 requestConfirmations = 3;
+//     uint32 numWords = 1;
 
     mapping(uint256 => address) public requestIdToUser;
     mapping(uint256 => AdType) public requestIdToAdType;
@@ -47,8 +47,8 @@ contract UserManager is Nonces, VRFConsumerBaseV2 {
     event AdClicked(uint256 indexed adId, address indexed user);
     event WeightsUpdated(uint256 priceWeight, uint256 viewsWeight, uint256 freshnessWeight, uint256 performanceWeight);
     
-    enum AdType { Video, Banner }
-    enum AdStatus { Active, Inactive }
+//     enum AdType { Video, Banner }
+//     enum AdStatus { Active, Inactive }
     
     struct Ad {
         uint256 id;
@@ -73,25 +73,25 @@ contract UserManager is Nonces, VRFConsumerBaseV2 {
         uint256 lastAdView;     // Last block number when user viewed an ad
     }
 
-    mapping(address => User) public users;
+//     mapping(address => User) public users;
 
-    constructor(
-        address _serverManager,
-        address _vrfCoordinator,
-        bytes32 _keyHash,
-        uint64 _subscriptionId
-    ) VRFConsumerBaseV2(_vrfCoordinator) {
-        i_ServerManager = _serverManager;
-        vrfCoordinator = _vrfCoordinator;
-        COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator);
-        keyHash = _keyHash;
-        s_subscriptionId = _subscriptionId;
-    }
+//     constructor(
+//         address _serverManager,
+//         address _vrfCoordinator,
+//         bytes32 _keyHash,
+//         uint64 _subscriptionId
+//     ) VRFConsumerBaseV2(_vrfCoordinator) {
+//         i_ServerManager = _serverManager;
+//         vrfCoordinator = _vrfCoordinator;
+//         COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator);
+//         keyHash = _keyHash;
+//         s_subscriptionId = _subscriptionId;
+//     }
 
-    modifier OnlyServer() {
-        require(msg.sender == i_ServerManager, "Only server can call this function");
-        _;
-    }
+//     modifier OnlyServer() {
+//         require(msg.sender == i_ServerManager, "Only server can call this function");
+//         _;
+//     }
 
     // Enhanced ad selection logic
     function calculateAdWeight(uint256 adId) public view returns (uint256) {
@@ -274,17 +274,17 @@ contract UserManager is Nonces, VRFConsumerBaseV2 {
         _useNonce(msg.sender);
     }
 
-    function viewBannerAd(uint256 adId) public OnlyServer {
-        require(_allowAdView(adId), "Ad not available");
-        users[msg.sender].bannerAdsViewed++;      
-    }
+//     function viewBannerAd(uint256 adId) public OnlyServer {
+//         require(_allowAdView(adId), "Ad not available");
+//         users[msg.sender].bannerAdsViewed++;      
+//     }
 
-    function verifyAdView(address user, uint256 adId, uint256 _nonce, bool clicked, bytes memory signature) public view returns (bool, bool) {
-        require(nonces(user) == _nonce + 1, "Invalid nonce");
-        bytes32 message = keccak256(abi.encodePacked(user, adId, _nonce, clicked));
-        address signer = ECDSA.recover(message, signature);
-        return (signer == i_ServerManager, clicked);
-    }
+//     function verifyAdView(address user, uint256 adId, uint256 _nonce, bool clicked, bytes memory signature) public view returns (bool, bool) {
+//         require(nonces(user) == _nonce + 1, "Invalid nonce");
+//         bytes32 message = keccak256(abi.encodePacked(user, adId, _nonce, clicked));
+//         address signer = ECDSA.recover(message, signature);
+//         return (signer == i_ServerManager, clicked);
+//     }
 
     // Utility functions
     function getAd(uint256 adId) public view returns (Ad memory) {
