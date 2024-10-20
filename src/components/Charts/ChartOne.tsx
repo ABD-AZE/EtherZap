@@ -3,7 +3,12 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import DefaultSelectOption from "@/components/SelectOption/DefaultSelectOption";
 
-const ChartOne: React.FC = () => {
+interface ChartOneProps {
+  videoAdsCount: number;
+  bannerAdsCount: number;
+}
+
+const ChartOne: React.FC<ChartOneProps> = ({ videoAdsCount, bannerAdsCount }) => {
   const series = [
     {
       name: "Received Amount",
@@ -14,7 +19,6 @@ const ChartOne: React.FC = () => {
       data: [15, 9, 17, 32, 25, 68, 80, 68, 84, 94, 74, 62],
     },
   ];
-
   const options: ApexOptions = {
     legend: {
       show: false,
@@ -79,10 +83,10 @@ const ChartOne: React.FC = () => {
     },
     tooltip: {
       fixed: {
-        enabled: !1,
+        enabled: false,
       },
       x: {
-        show: !1,
+        show: false,
       },
       y: {
         title: {
@@ -92,7 +96,7 @@ const ChartOne: React.FC = () => {
         },
       },
       marker: {
-        show: !1,
+        show: false,
       },
     },
     xaxis: {
@@ -127,6 +131,7 @@ const ChartOne: React.FC = () => {
     },
   };
 
+  // Function to update counts when an ad is submitted
   return (
     <div className="col-span-12 rounded-[10px] bg-white px-7.5 pb-6 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card xl:col-span-7">
       <div className="mb-3.5 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
@@ -157,13 +162,13 @@ const ChartOne: React.FC = () => {
         <div className="border-stroke dark:border-dark-3 xsm:w-1/2 xsm:border-r">
           <p className="font-medium">Video Ads</p>
           <h4 className="mt-1 text-xl font-bold text-dark dark:text-white">
-            50
+            {videoAdsCount} {/* Display the current count */}
           </h4>
         </div>
         <div className="xsm:w-1/2">
           <p className="font-medium">Banner Ads</p>
           <h4 className="mt-1 text-xl font-bold text-dark dark:text-white">
-            40
+            {bannerAdsCount} {/* Display the current count */}
           </h4>
         </div>
       </div>
