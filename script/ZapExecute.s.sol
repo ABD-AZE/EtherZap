@@ -10,15 +10,15 @@ import "../src/ZapAccount.sol";
 import "../lib/forge-std/src/console.sol";
 import "../src/ZapAccount.sol";
 contract Deploy is Script {
-    address public AF = 0x732DC53Ed45d08c716758bAcFCe660BE7641A35C;
+    address public AF = 0xA3239e7354016c79fa873eB211EDA5Cf214Ca13b;
     address public EP = 0x0000000071727De22E5E9d8BAf0edAc6f37da032;
-    address public PM = 0x1B3c85D5257fA52A4F72Fe31Cb9c26bDFF13F998;
-    uint256 salt = 13579111512;
-    address myaddress = 0x509d5DC4d295a7F534eC58F0f75Fd723ab72F8D4;
+    address public PM = 0xBC5ee9e1888037abF7B595bbD7031d50f586F657;
+    uint256 salt = 13579;
+    address myaddress = 0x6c2c4C594eE5093494e7a5D9D150bB9046486cdF;
     EntryPoint ep = EntryPoint(payable(EP));
     function run() external {
         uint128 verificationGasLimit = 1000000;
-        uint128 callGasLimit = 100000; 
+        uint128 callGasLimit = 10000; 
         uint128 maxPriorityFeePerGas = 619488; 
         uint128 maxFeePerGas = 619488; 
         address sender = getAddress(myaddress, salt);
@@ -36,7 +36,7 @@ contract Deploy is Script {
         PackedUserOperation memory userOp = PackedUserOperation({
             sender: sender,
             nonce: ep.getNonce(sender, 0),
-            initCode: hex"",
+            initCode: ic,
             callData: Calldata,
             accountGasLimits: bytes32(
                 (uint256(verificationGasLimit) << 128) | callGasLimit
@@ -54,7 +54,7 @@ contract Deploy is Script {
         uint8 v;
         bytes32 r;
         bytes32 s;
-        uint256 BASE_SEPOLIA_DEFAULT_KEY = 0x9442ed40cedff46250c0d84d2f0ae177c08ffb4dfe8cf78a1f5b6e999aa18d44;
+        uint256 BASE_SEPOLIA_DEFAULT_KEY = 0xcea99f985118ba7f869d8778ba7f233d98ded0ea3899e27acc7b8709ded8030c;
         (v, r, s) = vm.sign(BASE_SEPOLIA_DEFAULT_KEY, digest);
         bytes memory sig = abi.encodePacked(r, s, v);
         userOp.signature = sig;
@@ -62,8 +62,8 @@ contract Deploy is Script {
         ops[0] = userOp;
         uint256 gasLimit = 2000000;
         vm.startBroadcast();
-        ep.depositTo{value: .05 ether}(PM);
-        ep.handleOps{gas: gasLimit}(ops, payable(myaddress));
+        ep.depositTo{value: .2 ether}(PM);
+        ep.handleOps{gas: gasLimit}(ops, payable(0xbFFCa66179510D6C0CE3C2737b1942BF3f964519));
         vm.stopBroadcast();
     }
     function getAddress(
