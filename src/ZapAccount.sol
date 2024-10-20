@@ -11,7 +11,7 @@ import "../lib/account-abstraction/contracts/core/Helpers.sol";
 
 contract ZapAccount is IAccount {
     address public immutable owner;
-    IEntryPoint private immutable _entryPoint=IEntryPoint(0xEdf47C7E665bEb76b216205573935236f89ae83A);
+    IEntryPoint private immutable _entryPoint=IEntryPoint(0x0000000071727De22E5E9d8BAf0edAc6f37da032);
 
     modifier onlyOwnerorEntryPoint() {
         require(msg.sender == owner || msg.sender == address(_entryPoint), "only owner or entry point");
