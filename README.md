@@ -54,7 +54,7 @@ npm run dev
 ### Base Sepolia 
 
 #### Decentralised Social Media - 0x859Bb215897ED323508155c212fe6B30Cc895da4
-#### User Manager - 0xb76374Ca7313c9D770FC3901F9c4d831F877D521
+#### AdManager - 0xb76374Ca7313c9D770FC3901F9c4d831F877D521
 #### ZapAccountFactory - 0xA3239e7354016c79fa873eB211EDA5Cf214Ca13b
 #### ZapPaymaster - 0xBC5ee9e1888037abF7B595bbD7031d50f586F657
 #### Temporary_Account_1 - 0x500219588BaD072DE8213d1A813a704b478697fa
