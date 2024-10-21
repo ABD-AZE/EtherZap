@@ -1,9 +1,9 @@
-#Introduction
+# Introduction
 
 
 EtherZap showcases our proof of concept (POC) designed to address a significant challenge in decentralized applications: the burden of gas fees on user interactions. Our aim is to demonstrate a more user-friendly model that enhances engagement.
 
-#UserFlow
+# UserFlow
 ![image](https://github.com/user-attachments/assets/76c893cc-198a-450d-90d7-70f088abc6ab)
 
 
