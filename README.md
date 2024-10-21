@@ -16,6 +16,14 @@ EtherZap showcases our proof of concept (POC) designed to address a significant 
 # Our Model 
 Etherzap introduces a unique model where sponsors can run ads on the platform, providing users with a choice during their interactions. Users can either watch an ad to enable a gasless transaction or proceed by covering the gas fee themselves. By leveraging ERC-4337 (account abstraction), Etherzap covers the gas fees for users who opt to watch ads—users simply sign a message, and we take care of the rest. Ads are hosted on IPFS, while our ad manager smart contracts track ad impressions, ensuring accurate billing and maintaining sponsor trust through transparent and timely charges.
 
+# Our Vision 
+
+Our future vision is to develop an SDK that can be seamlessly integrated into any dApp, allowing them to implement Etherzap's ad-based gasless transaction model. Additionally, we plan to introduce Web2-based signups, enabling users to sign user operations using familiar methods like passkeys or other Web2 login options. This will significantly simplify onboarding, making Web3 more accessible to a broader audience.
+
+
+
+
+
 
 
 
