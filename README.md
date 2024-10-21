@@ -1,8 +1,12 @@
-# TO-Do
-1. Frontend Social media app for demo
-2. Our Main frontend (iske through companies hume contact krengi to show their ads and pay us, this money would go into the main account which funds the paymaster) (what percentage of the money should remain in our paymaster account and what percentage should go in EntryPoint.sol?)
-3. Initcode contains the factory contract address
-4. One Ad will be shown
+#Introduction
+
+
+EtherZap showcases our proof of concept (POC) designed to address a significant challenge in decentralized applications: the burden of gas fees on user interactions. Our aim is to demonstrate a more user-friendly model that enhances engagement.
+
+#UserFlow
+![image](https://github.com/user-attachments/assets/76c893cc-198a-450d-90d7-70f088abc6ab)
+
+
 
 ## Contract Addresses 
 
