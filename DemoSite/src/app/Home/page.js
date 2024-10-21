@@ -64,9 +64,9 @@ const Page = () => {
               </div>
             </div>
           </div>
-          {userData.map((user, index) => {
-            return <Post key={index} userData={user} />
-          })}
+           
+             <Post />
+          
         </div>
 
         <div className="adWidget">
