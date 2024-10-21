@@ -18,25 +18,25 @@ contract Deploy is Script {
     EntryPoint ep = EntryPoint(payable(EP));
     function run() external {
         uint128 verificationGasLimit = 1000000;
-        uint128 callGasLimit = 10000; 
+        uint128 callGasLimit = 10000000; 
         uint128 maxPriorityFeePerGas = 619488; 
         uint128 maxFeePerGas = 619488; 
         address sender = getAddress(myaddress, salt);
 
-        bytes memory Calldata = generateCallData(
-            address(0x9f13c3FA4eAE22A984c1f9c4936477C448540A22),
-            0,
-            hex""
-        );
+        // bytes memory Calldata = generateCallData(
+        //     address(0x9f13c3FA4eAE22A984c1f9c4936477C448540A22),
+        //     0,
+        //     hex""
+        // );
         uint48 validUntil = uint48(block.timestamp + 1000);
         uint48 validAfter = uint48(block.timestamp);
-        // bytes memory Calldata = generateCallData(address(0x9f13c3FA4eAE22A984c1f9c4936477C448540A22), 0.1 ether, hex"");
+        bytes memory Calldata = generateCallData(address(0x523A8ad9A2f7636d0Bc47e63cA1a3E9474D05894), 0.0 ether, hex"725009d30000000000000000000000000000000000000000000000000000000000000000");
         bytes memory ic = generateInitCode(AF, myaddress, salt);
         bytes memory PMData = abi.encodePacked(PM,verificationGasLimit,verificationGasLimit); 
         PackedUserOperation memory userOp = PackedUserOperation({
             sender: sender,
             nonce: ep.getNonce(sender, 0),
-            initCode: ic,
+            initCode: hex"",
             callData: Calldata,
             accountGasLimits: bytes32(
                 (uint256(verificationGasLimit) << 128) | callGasLimit
@@ -59,10 +59,10 @@ contract Deploy is Script {
         bytes memory sig = abi.encodePacked(r, s, v);
         userOp.signature = sig;
         PackedUserOperation[] memory ops = new PackedUserOperation[](1);
-        ops[0] = userOp;
-        uint256 gasLimit = 2000000;
+    ops[0] = userOp;
+        uint256 gasLimit = 20000000;
         vm.startBroadcast();
-        ep.depositTo{value: .2 ether}(PM);
+        ep.depositTo{value: 0.1 ether}(PM);
         ep.handleOps{gas: gasLimit}(ops, payable(0xbFFCa66179510D6C0CE3C2737b1942BF3f964519));
         vm.stopBroadcast();
     }
