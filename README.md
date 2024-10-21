@@ -27,7 +27,7 @@ We use Base, an L2 solution, for sending transactions because of its lower gas f
 # Quickstart
 clone the repo 
 ```
-cd EtherZap
+cromewar@ujjwal:~/aa-integration/AccountAbstractionScript$ node index.js 
 ```
 ```
 npm install 
