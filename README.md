@@ -13,6 +13,10 @@ EtherZap showcases our proof of concept (POC) designed to address a significant 
 
 ![EtherZapSponsor drawio (4)](https://github.com/user-attachments/assets/8faaf4ad-ec83-4c81-8a23-6412c3497705)
 
+# Our Model 
+Etherzap introduces a unique model where sponsors can run ads on the platform, providing users with a choice during their interactions. Users can either watch an ad to enable a gasless transaction or proceed by covering the gas fee themselves. By leveraging ERC-4337 (account abstraction), Etherzap covers the gas fees for users who opt to watch ads—users simply sign a message, and we take care of the rest. Ads are hosted on IPFS, while our ad manager smart contracts track ad impressions, ensuring accurate billing and maintaining sponsor trust through transparent and timely charges.
+
+
 
 
 
